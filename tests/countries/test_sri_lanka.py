@@ -187,7 +187,9 @@ class TestSriLanka(CommonCountryTests, TestCase):
             "2024-03-08",
             "2025-02-26",
         )
-        self.assertHolidayName(name, self.full_range)
+        # Maha Sivarathri dates are confirmed only up to 2026.
+        # Dates for 2027+ will be added from official Sri Lanka Government Gazettes.
+        self.assertHolidayName(name, range(self.start_year, 2027))
 
     def test_duruthu_full_moon_poya_day(self):
         name = "දුරුතු පුර පසළොස්වක පෝය දිනය"
@@ -201,9 +203,15 @@ class TestSriLanka(CommonCountryTests, TestCase):
             "2025-01-13",
         )
         self.assertHolidayNameCount(
-            name, 1, range(self.start_year, 2009), range(2011, self.end_year)
+            name, 1, range(self.start_year, 2009), range(2011, 2028), range(2030, self.end_year)
         )
-        self.assertHolidayNameCount(name, 2, 2009)
+        # 2009 and 2028 each have two Duruthu entries (Jan + Dec 31).
+        # In both cases the astronomical full moon on Dec 31 falls within
+        # the Duruthu lookup window for that year.
+        self.assertHolidayNameCount(name, 2, 2009, 2028)
+        # 2029 has zero Duruthu entries: the only nearby Duruthu full moon
+        # is the Dec 31, 2028 entry that was already attributed to 2028.
+        self.assertHolidayNameCount(name, 0, 2029)
 
     def test_nawam_full_moon_poya_day(self):
         name = "නවම් පුර පසළොස්වක පෝය දිනය"

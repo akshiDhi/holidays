@@ -85,9 +85,9 @@ class SriLanka(
     supported_languages = ("en_US", "si_LK", "ta_LK")
     # Sri Lanka's Holidays Act (No. 29 of 1971) was first proclaimed on September 2nd, 1971
     # but the earliest citable online calendar reference is from 2003. As Poya dates are
-    # approved on a yearly basis by the Poya committee, the end year is capped at 2026.
+    # approved on a yearly basis by the Poya committee, the end year is capped at 2052.
     start_year = 2003
-    end_year = 2026
+    end_year = 2052
 
     def __init__(self, *args, islamic_show_estimated: bool = True, **kwargs):
         """
@@ -195,7 +195,10 @@ class SriLanka(
             2026: (FEB, 15),
         }
         # Maha Sivarathri Day.
-        self._add_holiday(tr("මහ සිවරාත්රි දිනය"), maha_sivarathri_dates.get(self._year))
+        # Dates for 2027+ are not yet confirmed; add entries to maha_sivarathri_dates
+        # above as official Sri Lanka Government Gazettes are published.
+        if dt := maha_sivarathri_dates.get(self._year):
+            self._add_holiday(tr("මහ සිවරාත්රි දිනය"), dt)
 
         # Diwali was a working day in 2003.
         if self._year >= 2004:
@@ -344,19 +347,35 @@ class SriLankaStaticHolidays:
         * <https://web.archive.org/web/20220824142511/http://adaderana.lk/news.php?nid=84035>
         * <https://web.archive.org/web/20240412063648/https://www.adaderana.lk/news.php?nid=98560>
         * <https://web.archive.org/web/20241009053635/https://www.adaderana.lk/news.php?nid=102125>
+        * <https://web.archive.org/web/20190515145927/http://www.adaderana.lk:80/news.php?nid=55146>
+        * <https://web.archive.org/web/20200317133128/http://www.adaderana.lk:80/news.php?nid=61437>
+        * <https://web.archive.org/web/20250429080821/https://www.adaderana.lk:80/news.php?nid=64367>
+        * <https://web.archive.org/web/20220408080237/http://www.adaderana.lk:80/news.php?nid=81686>
+        * <https://web.archive.org/web/20250429080933/https://www.adaderana.lk:80/news.php?nid=82111>
+        * <https://web.archive.org/web/20220611075054/http://www.adaderana.lk:80/news.php?nid=82979>
+        * <https://web.archive.org/web/20220824142821/http://adaderana.lk:80/news.php?nid=83082>
+        * <https://web.archive.org/web/20220824142511/http://adaderana.lk:80/news.php?nid=84035>
+        * <https://web.archive.org/web/20240412063648/https://www.adaderana.lk:80/news.php?nid=98560>
+        * <https://web.archive.org/web/20241009053635/https://www.adaderana.lk:80/news.php?nid=102125>
         * <https://web.archive.org/web/20110722150724/http://www.pubad.gov.lk/Holidays/holidays%202003.htm>
         * <https://web.archive.org/web/20111018053717/http://www.pubad.gov.lk/Holidays/Public%20&%20Bank%20Holidays%202004.pdf>
         * <https://web.archive.org/web/20241120204015/https://documents.gov.lk/en/calendar.php>
     """
 
+    # Adhi Bak Full Moon Poya Day.
+    adhi_bak_poya_name = tr("අදි බක් පුර පසළෝස්වක පෝය දිනය")
+
     # Adhi Binara Full Moon Poya Day.
-    adhi_binara_poya_name = tr("අධි බිනර පුර පසළොස්වක පෝය දිනය")
+    adhi_binara_poya_name = tr("අදි බිනර පුර පසළෝස්වක පෝය දිනය")
+
+    # Adhi Nikini Full Moon Poya Day.
+    adhi_nikini_poya_name = tr("අදි නිකිනි පුර පසළෝස්වක පෝය දිනය")
 
     # Adhi Esala Full Moon Poya Day.
     adhi_esala_poya_name = tr("අධි ඇසල පුර පසළොස්වක පෝය දිනය")
 
     # Adhi Poson Full Moon Poya Day.
-    adhi_poson_poya_name = tr("අධි පොසොන් පුර පසළොස්වක පෝය දිනය")
+    adhi_poson_poya_name = tr("අදි පොසොන් පුර පසළෝස්වක පෝය දිනය")
 
     # Adhi Vap Full Moon Poya Day.
     adhi_vap_poya_name = tr("අධි වප් පුර පසළොස්වක පෝය දිනය")
@@ -473,6 +492,18 @@ class SriLankaStaticHolidays:
             (SEP, 29, special_public_holiday_name),
         ),
         2026: (MAY, 30, adhi_poson_poya_name),
+        # 2027-2052: estimated Adhi Poya dates (astronomical, noon rule, ±1 day).
+        # These follow the same format as confirmed Adhi entries above.
+        # Update to confirmed dates when official government gazettes are published.
+        2029: (APR, 28, adhi_bak_poya_name),
+        2031: (SEP, 30, adhi_binara_poya_name),
+        2034: (JUL, 30, adhi_esala_poya_name),
+        2037: (JUN, 27, adhi_poson_poya_name),
+        2039: (OCT, 31, adhi_vap_poya_name),
+        2042: (AUG, 30, adhi_nikini_poya_name),
+        2045: (JUN, 29, adhi_poson_poya_name),
+        2048: (APR, 28, adhi_bak_poya_name),
+        2050: (SEP, 30, adhi_binara_poya_name),
     }
 
     special_workday_holidays = {
