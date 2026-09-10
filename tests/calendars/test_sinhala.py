@@ -45,7 +45,7 @@ class TestSinhalaLunarCalendar(unittest.TestCase):
         self.assertEqual(self.calendar.END_YEAR, 2052)
 
     def test_out_of_range_returns_none(self):
-        """Years outside [START_YEAR, END_YEAR] must return (None, True) — no date, any flag."""
+        """Years outside [START_YEAR, END_YEAR] must return (None, True) - no date, any flag."""
         before = self.calendar.START_YEAR - 1
         after = self.calendar.END_YEAR + 1
 
@@ -222,7 +222,7 @@ class TestSinhalaLunarCalendar(unittest.TestCase):
 
     def test_duruthu_poya_confirmed(self):
         """Confirmed single-year Duruthu lookups must contain the correct date, not estimated."""
-        # duruthu_poya_date(year) looks at (year-1, year) — we check the primary entry
+        # duruthu_poya_date(year) looks at (year-1, year) - we check the primary entry
         confirmed = {
             # (year arg, expected date in that result set)
             2011: date(2011, JAN, 19),

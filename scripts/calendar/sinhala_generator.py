@@ -293,8 +293,10 @@ def validate_historical(ts=None, eph=None) -> tuple[int, int]:
             if official in noon_set:
                 match += 1
             else:
-                adj = [d for d in [official - timedelta(1), official + timedelta(1)] if d in noon_set]
-                adj_str = f" (FM off by 1: {adj[0]})" if adj else " (FM not found)"
+                adj = [
+                    d for d in [official - timedelta(1), official + timedelta(1)] if d in noon_set
+                ]
+                adj_str = f"  (FM off by 1: {adj[0]})" if adj else "  (FM not found)"
                 print(f"  MISMATCH {year} {mname}: official={official}{adj_str}")  # noqa: T201
 
     return match, total
@@ -374,7 +376,7 @@ def write_output(
     out_path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
     print(f"\nWrote {out_path}")  # noqa: T201
 
-    print(f"\n{'='*60}")  # noqa: T201
+    print(f"\n{'=' * 60}")  # noqa: T201
     print("Summary of Adhi (intercalary) Poya years:")  # noqa: T201
     for year, d, name in sorted(adhi_poyas, key=lambda x: x[0]):
         print(f"  {year}: {name} on {d}")  # noqa: T201
@@ -396,7 +398,7 @@ def generate_data() -> None:
     print("\nStep 1: Validating noon rule against 2005-2025 official calendar ...")  # noqa: T201
     match, total = validate_historical(ts, eph)
     print(  # noqa: T201
-        f"\n  Result: {match}/{total} = {match/total*100:.1f}% historical dates match "
+        f"\n  Result: {match}/{total} = {match / total * 100:.1f}% historical dates match "
         f"(~20% are off by 1 day -- government committee rounding)."
     )
 
